@@ -9,9 +9,9 @@
 
 ## Usage
 
-```bash
-yarn add use-modal-dialog
-```
+<!-- ```bash
+~yarn add use-modal-dialog~
+``` -->
 
 See [example/index.js](https://github.com/moriyuu/use-modal-dialog/blob/master/example/index.js).
 
@@ -27,3 +27,4 @@ yarn dev # Open http://localhost:1234
 ## TODO
 
 - [ ] Customize Style
+- [ ] Prompt Modal Dialog
