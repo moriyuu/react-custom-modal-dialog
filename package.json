@@ -1,0 +1,31 @@
+{
+  "name": "use-modal-dialog",
+  "version": "0.1.0",
+  "author": "moriyuu",
+  "scripts": {
+    "build": "rimraf dist & rollup -c",
+    "deploy:demo": "netlify deploy --dir=example-dist --prod",
+    "dev": "parcel example/index.html --out-dir example-dist"
+  },
+  "dependencies": {
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "styled-components": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.8",
+    "@types/react-dom": "^16.8.3",
+    "@types/styled-components": "^4.1.12",
+    "parcel-bundler": "^1.12.3",
+    "rimraf": "^2.6.3",
+    "rollup": "^1.7.4",
+    "rollup-plugin-typescript2": "^0.20.1",
+    "typescript": "^3.3.4000"
+  },
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js"
+}
