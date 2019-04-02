@@ -1,3 +1,4 @@
+import "@babel/polyfill";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { useModalDialog } from "../src";
@@ -15,6 +16,14 @@ const App = () => {
   return (
     <div>
       <h1>use-modal-dialog</h1>
+      <p>
+        <a
+          target="_blank"
+          href="https://github.com/moriyuu/use-modal-dialog/blob/master/example/index.js"
+        >
+          source code of this demo
+        </a>
+      </p>
 
       <button onClick={() => xalert("Hello World")}>alert</button>
       <button onClick={myconfirm}>confirm</button>
