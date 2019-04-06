@@ -24,7 +24,7 @@ const App = () => {
         </a>
       </p>
 
-      {/* <button onClick={() => xalert("Hello World")}>alert</button> */}
+      <button onClick={() => ModalDialog.alert("Hello World")}>alert</button>
       <button onClick={myconfirm}>confirm</button>
 
       <div>{text}</div>
