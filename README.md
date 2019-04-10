@@ -1,4 +1,4 @@
-# useModalDialog
+# react-custom-modal-dialog
 
 > React Hook for Alert Modal Dialog & Confirm Modal Dialog
 
@@ -10,7 +10,7 @@
 ## Usage
 
 <!-- ```bash
-yarn add react-custom-modal-dialog~
+yarn add react-custom-modal-dialog
 ``` -->
 
 See [example/index.js](https://github.com/moriyuu/react-custom-modal-dialog/blob/master/example/index.js).
