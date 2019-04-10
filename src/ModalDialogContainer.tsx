@@ -1,7 +1,7 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
-import EventEmitter from "events";
+import { ModalDialog } from "./ModalDialogEventEmitter";
 
 const Wrapper = styled.div<{ isOpen: boolean }>`
   box-sizing: border-box;
@@ -29,84 +29,83 @@ const Wrapper = styled.div<{ isOpen: boolean }>`
     `}
 `;
 
-const ev = new EventEmitter();
-
 type ModalDialogState = {
   isOpen: boolean;
   text: string;
 };
 
-export const useModalDialog = () => {
+/**
+ * useAlert
+ */
+const useAlert = () => {
   const [alertState, setAlertState] = useState<ModalDialogState>({
     isOpen: false,
     text: ""
   });
+
+  useEffect(() => {
+    ModalDialog.addEventListener("openAlert", openAlert);
+
+    return () => ModalDialog.removeEventListener("openAlert", openAlert);
+  }, []);
+
+  const openAlert = async (text: string) => {
+    setAlertState({ isOpen: true, text: text || "" });
+  };
+
+  const clickAlert = () => {
+    ModalDialog.clickAlert();
+    setAlertState(_state => ({ isOpen: false, text: _state.text }));
+  };
+
+  return { alertState, clickAlert };
+};
+
+/**
+ * useConfirm
+ */
+const useConfirm = () => {
   const [confirmState, setConfirmState] = useState<ModalDialogState>({
     isOpen: false,
     text: ""
   });
 
-  /**
-   * alert
-   */
-  const xalert = async (text?: string): Promise<undefined> => {
-    setAlertState({ isOpen: true, text: text || "" });
-    return await new Promise(resolve => {
-      ev.once("alert", () => {
-        resolve();
-      });
-    }).then(() => undefined);
-  };
+  useEffect(() => {
+    ModalDialog.addEventListener("openConfirm", openConfirm);
 
-  const clickAlertOK = () => {
-    ev.emit("alert");
-    setAlertState({ isOpen: false, text: "" });
-  };
+    return () => ModalDialog.removeEventListener("openConfirm", openConfirm);
+  }, []);
 
-  /**
-   * confirm
-   */
-  const xconfirm = async (text?: string): Promise<boolean> => {
+  const openConfirm = async (text: string) => {
     setConfirmState({ isOpen: true, text: text || "" });
-    return await new Promise((resolve, reject) => {
-      ev.once("confirm", (type: "ok" | "cancel") => {
-        if (type === "ok") resolve();
-        if (type === "cancel") reject();
-      });
-    })
-      .then(() => true)
-      .catch(() => false);
   };
 
   const clickConfirm = (type: "ok" | "cancel") => {
-    ev.emit("confirm", type);
+    ModalDialog.clickConfirm(type);
     setConfirmState(_state => ({ isOpen: false, text: _state.text }));
   };
 
-  return {
-    xalert,
-    xconfirm,
-    ModalDialogContainer: (
-      <>
-        <Alert {...alertState} clickAlertOK={clickAlertOK} />
-        <Confirm {...confirmState} clickConfirm={clickConfirm} />
-      </>
-    )
-  };
+  return { confirmState, clickConfirm };
 };
 
-const Alert: React.FC<ModalDialogState & { clickAlertOK(): void }> = props => {
-  const { isOpen, text, clickAlertOK } = props;
+/**
+ * Alert
+ */
+const Alert: React.FC<ModalDialogState & { clickAlert(): void }> = props => {
+  const { isOpen, text, clickAlert } = props;
   return (
     <Wrapper isOpen={isOpen}>
       <h3>{text}</h3>
       <div>
-        <button onClick={clickAlertOK}>OK</button>
+        <button onClick={clickAlert}>OK</button>
       </div>
     </Wrapper>
   );
 };
 
+/**
+ * Confirm
+ */
 const Confirm: React.FC<
   ModalDialogState & { clickConfirm(type: "ok" | "cancel"): void }
 > = props => {
@@ -119,5 +118,20 @@ const Confirm: React.FC<
         <button onClick={() => clickConfirm("ok")}>OK</button>
       </div>
     </Wrapper>
+  );
+};
+
+/**
+ * ModalDialogContainer
+ */
+export const ModalDialogContainer: React.FC = () => {
+  const { confirmState, clickConfirm } = useConfirm();
+  const { alertState, clickAlert } = useAlert();
+
+  return (
+    <>
+      <Alert {...alertState} clickAlert={clickAlert} />
+      <Confirm {...confirmState} clickConfirm={clickConfirm} />
+    </>
   );
 };

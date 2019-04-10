@@ -1,14 +1,13 @@
 import "@babel/polyfill";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { useModalDialog } from "../src";
+import { ModalDialogContainer, ModalDialog } from "../src";
 
 const App = () => {
-  const { xalert, xconfirm, ModalDialogContainer } = useModalDialog();
   const [text, setText] = React.useState("");
 
   const myconfirm = async () => {
-    if (await xconfirm("元気ですかー？")) {
+    if (await ModalDialog.confirm("元気ですかー？")) {
       setText("元気でよかった！");
     }
   };
@@ -25,12 +24,12 @@ const App = () => {
         </a>
       </p>
 
-      <button onClick={() => xalert("Hello World")}>alert</button>
+      <button onClick={() => ModalDialog.alert("Hello World")}>alert</button>
       <button onClick={myconfirm}>confirm</button>
 
       <div>{text}</div>
 
-      {ModalDialogContainer}
+      <ModalDialogContainer />
     </div>
   );
 };
