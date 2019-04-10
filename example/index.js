@@ -1,14 +1,14 @@
 import "@babel/polyfill";
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import React from "react";
+import ReactDOM from "react-dom";
 import { ModalDialogContainer, ModalDialog } from "../src";
 
 const App = () => {
   const [text, setText] = React.useState("");
 
   const myconfirm = async () => {
-    if (await ModalDialog.confirm("元気ですかー？")) {
-      setText("元気でよかった！");
+    if (await ModalDialog.confirm("Really?")) {
+      setText("It is real.");
     }
   };
 
