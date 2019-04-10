@@ -1,11 +1,13 @@
 # react-custom-modal-dialog
 
-> React Hook for Alert Modal Dialog & Confirm Modal Dialog
-
 ## Features
 
-- Custom Hook
-- **Usability like `window.alert()` or `window.confirm()`**
+- Provides 3 types of modal dialog API
+  - `alert`
+  - `confirm`
+  - `prompt`
+- **Usability like `window.alert()`, `window.confirm()` or `window.prompt()`**
+- Custom style modal dialog component available
 
 ## Usage
 
