@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { ModalDialogState } from "./types";
 
@@ -37,7 +38,7 @@ export const DefaultAlert: React.FC<
   const { isOpen, content, clickAlert } = props;
   return (
     <Wrapper isOpen={isOpen}>
-      <h3>{content}</h3>
+      <div>{content}</div>
       <div>
         <button onClick={clickAlert}>OK</button>
       </div>
@@ -52,12 +53,39 @@ export const DefaultConfirm: React.FC<
   ModalDialogState & { clickConfirm(type: "ok" | "cancel"): void }
 > = props => {
   const { isOpen, content, clickConfirm } = props;
+
   return (
     <Wrapper isOpen={isOpen}>
-      <h3>{content}</h3>
+      <div>{content}</div>
       <div>
         <button onClick={() => clickConfirm("cancel")}>Cancel</button>
         <button onClick={() => clickConfirm("ok")}>OK</button>
+      </div>
+    </Wrapper>
+  );
+};
+
+/**
+ * DefaultPrompt component
+ */
+export const DefaultPrompt: React.FC<
+  ModalDialogState & { clickPrompt(type: "ok" | "cancel", text: string): void }
+> = props => {
+  const { isOpen, content, clickPrompt } = props;
+
+  const [text, setText] = useState("");
+
+  useEffect(() => {
+    if (isOpen) setText("");
+  }, [isOpen]);
+
+  return (
+    <Wrapper isOpen={isOpen}>
+      <div>{content}</div>
+      <input type="text" value={text} onChange={e => setText(e.target.value)} />
+      <div>
+        <button onClick={() => clickPrompt("cancel")}>Cancel</button>
+        <button onClick={() => clickPrompt("ok", text)}>OK</button>
       </div>
     </Wrapper>
   );

@@ -5,11 +5,17 @@ import { ModalDialogContainer, ModalDialog } from "../src";
 
 const App = () => {
   const [text, setText] = React.useState("");
+  const [name, setName] = React.useState("");
 
-  const myconfirm = async () => {
+  const myConfirm = async () => {
     if (await ModalDialog.confirm("Really?")) {
       setText("It is real.");
     }
+  };
+
+  const myPrompt = async () => {
+    const name = await ModalDialog.prompt("What is your name?");
+    setName(name);
   };
 
   return (
@@ -25,9 +31,11 @@ const App = () => {
       </p>
 
       <button onClick={() => ModalDialog.alert("Hello World")}>alert</button>
-      <button onClick={myconfirm}>confirm</button>
+      <button onClick={myConfirm}>confirm</button>
+      <button onClick={myPrompt}>prompt</button>
 
       <div>{text}</div>
+      <div>{!!name && `You are ${name}.`}</div>
 
       <ModalDialogContainer />
     </div>

@@ -29,6 +29,18 @@ class ModalDialogEventEmitter {
       .catch(() => false);
   };
 
+  prompt = async (
+    content?: ModalDialogState["content"]
+  ): Promise<undefined> => {
+    this.emitter.emit("openPrompt", content);
+    return await new Promise(resolve => {
+      this.emitter.once("prompt", (type: "ok" | "cancel", text: string) => {
+        if (type === "ok") resolve(text);
+        if (type === "cancel") resolve(null);
+      });
+    });
+  };
+
   clickAlert = () => {
     this.emitter.emit("alert");
   };
@@ -37,15 +49,19 @@ class ModalDialogEventEmitter {
     this.emitter.emit("confirm", type);
   };
 
+  clickPrompt = (type: "ok" | "cancel", text: string) => {
+    this.emitter.emit("prompt", type, text);
+  };
+
   addEventListener = (
-    type: "openAlert" | "openConfirm",
+    type: "openAlert" | "openConfirm" | "openPrompt",
     callback: (content?: ModalDialogState["content"]) => void
   ) => {
     this.emitter.addListener(type, callback);
   };
 
   removeEventListener = (
-    type: "openAlert" | "openConfirm",
+    type: "openAlert" | "openConfirm" | "openPrompt",
     callback: (content?: ModalDialogState["content"]) => void
   ) => {
     this.emitter.removeListener(type, callback);
