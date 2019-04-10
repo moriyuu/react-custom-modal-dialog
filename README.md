@@ -7,7 +7,7 @@
   - `confirm`
   - `prompt`
 - **Usability like `window.alert()`, `window.confirm()` or `window.prompt()`**
-- Custom style modal dialog component available
+- Custom style modal dialog component available _cannot use yet_
 
 ## Usage
 
@@ -15,7 +15,7 @@
 yarn add react-custom-modal-dialog
 ``` -->
 
-See [example/index.js](https://github.com/moriyuu/react-custom-modal-dialog/blob/master/example/index.js).
+See [example/index.js](https://github.com/moriyuu/react-custom-modal-dialog/blob/master/example/index.js#L10-L19).
 
 ## Development
 
@@ -28,5 +28,5 @@ yarn dev # Open http://localhost:1234
 
 ## TODO
 
+- [x] Prompt Modal Dialog
 - [ ] Customize Style
-- [ ] Prompt Modal Dialog
