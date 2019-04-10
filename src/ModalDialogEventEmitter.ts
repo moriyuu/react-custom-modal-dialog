@@ -1,4 +1,5 @@
 import EventEmitter from "events";
+import { ModalDialogState } from "./types";
 
 class ModalDialogEventEmitter {
   private emitter: EventEmitter;
@@ -7,8 +8,8 @@ class ModalDialogEventEmitter {
     this.emitter = new EventEmitter();
   }
 
-  alert = async (text?: string): Promise<undefined> => {
-    this.emitter.emit("openAlert", text);
+  alert = async (content?: ModalDialogState["content"]): Promise<undefined> => {
+    this.emitter.emit("openAlert", content);
     return await new Promise((resolve, reject) => {
       this.emitter.once("alert", () => {
         resolve();
@@ -16,8 +17,8 @@ class ModalDialogEventEmitter {
     }).then(() => undefined);
   };
 
-  confirm = async (text?: string): Promise<boolean> => {
-    this.emitter.emit("openConfirm", text);
+  confirm = async (content?: ModalDialogState["content"]): Promise<boolean> => {
+    this.emitter.emit("openConfirm", content);
     return await new Promise((resolve, reject) => {
       this.emitter.once("confirm", (type: "ok" | "cancel") => {
         if (type === "ok") resolve();
@@ -38,14 +39,14 @@ class ModalDialogEventEmitter {
 
   addEventListener = (
     type: "openAlert" | "openConfirm",
-    callback: (text: string) => void
+    callback: (content?: ModalDialogState["content"]) => void
   ) => {
     this.emitter.addListener(type, callback);
   };
 
   removeEventListener = (
     type: "openAlert" | "openConfirm",
-    callback: (text: string) => void
+    callback: (content?: ModalDialogState["content"]) => void
   ) => {
     this.emitter.removeListener(type, callback);
   };

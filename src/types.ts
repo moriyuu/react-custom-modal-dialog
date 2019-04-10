@@ -1,4 +1,6 @@
+import * as React from "react";
+
 export type ModalDialogState = {
   isOpen: boolean;
-  text: "";
+  content: React.ReactNode;
 };

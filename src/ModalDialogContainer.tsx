@@ -10,7 +10,7 @@ import { DefaultAlert, DefaultConfirm } from "./DefaultComponents";
 const useAlert = () => {
   const [alertState, setAlertState] = useState<ModalDialogState>({
     isOpen: false,
-    text: ""
+    content: ""
   });
 
   useEffect(() => {
@@ -19,13 +19,13 @@ const useAlert = () => {
     return () => ModalDialog.removeEventListener("openAlert", openAlert);
   }, []);
 
-  const openAlert = async (text: string) => {
-    setAlertState({ isOpen: true, text: text || "" });
+  const openAlert = async (content?: ModalDialogState["content"]) => {
+    setAlertState({ isOpen: true, content: content || "" });
   };
 
   const clickAlert = () => {
     ModalDialog.clickAlert();
-    setAlertState(_state => ({ isOpen: false, text: _state.text }));
+    setAlertState(_state => ({ isOpen: false, content: _state.content }));
   };
 
   return { alertState, clickAlert };
@@ -37,7 +37,7 @@ const useAlert = () => {
 const useConfirm = () => {
   const [confirmState, setConfirmState] = useState<ModalDialogState>({
     isOpen: false,
-    text: ""
+    content: ""
   });
 
   useEffect(() => {
@@ -46,13 +46,13 @@ const useConfirm = () => {
     return () => ModalDialog.removeEventListener("openConfirm", openConfirm);
   }, []);
 
-  const openConfirm = async (text: string) => {
-    setConfirmState({ isOpen: true, text: text || "" });
+  const openConfirm = async (content?: ModalDialogState["content"]) => {
+    setConfirmState({ isOpen: true, content: content || "" });
   };
 
   const clickConfirm = (type: "ok" | "cancel") => {
     ModalDialog.clickConfirm(type);
-    setConfirmState(_state => ({ isOpen: false, text: _state.text }));
+    setConfirmState(_state => ({ isOpen: false, content: _state.content }));
   };
 
   return { confirmState, clickConfirm };

@@ -34,10 +34,10 @@ const Wrapper = styled.div<{ isOpen: boolean }>`
 export const DefaultAlert: React.FC<
   ModalDialogState & { clickAlert(): void }
 > = props => {
-  const { isOpen, text, clickAlert } = props;
+  const { isOpen, content, clickAlert } = props;
   return (
     <Wrapper isOpen={isOpen}>
-      <h3>{text}</h3>
+      <h3>{content}</h3>
       <div>
         <button onClick={clickAlert}>OK</button>
       </div>
@@ -51,10 +51,10 @@ export const DefaultAlert: React.FC<
 export const DefaultConfirm: React.FC<
   ModalDialogState & { clickConfirm(type: "ok" | "cancel"): void }
 > = props => {
-  const { isOpen, text, clickConfirm } = props;
+  const { isOpen, content, clickConfirm } = props;
   return (
     <Wrapper isOpen={isOpen}>
-      <h3>{text}</h3>
+      <h3>{content}</h3>
       <div>
         <button onClick={() => clickConfirm("cancel")}>Cancel</button>
         <button onClick={() => clickConfirm("ok")}>OK</button>
