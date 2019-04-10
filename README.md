@@ -10,16 +10,16 @@
 ## Usage
 
 <!-- ```bash
-~yarn add use-modal-dialog~
+yarn add react-custom-modal-dialog~
 ``` -->
 
-See [example/index.js](https://github.com/moriyuu/use-modal-dialog/blob/master/example/index.js).
+See [example/index.js](https://github.com/moriyuu/react-custom-modal-dialog/blob/master/example/index.js).
 
 ## Development
 
 ```bash
-git clone git@github.com:moriyuu/use-modal-dialog.git
-cd use-modal-dialog
+git clone git@github.com:moriyuu/react-custom-modal-dialog.git
+cd react-custom-modal-dialog
 yarn install
 yarn dev # Open http://localhost:1234
 ```

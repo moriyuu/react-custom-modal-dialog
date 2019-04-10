@@ -14,11 +14,11 @@ const App = () => {
 
   return (
     <div>
-      <h1>use-modal-dialog</h1>
+      <h1>react-custom-modal-dialog</h1>
       <p>
         <a
           target="_blank"
-          href="https://github.com/moriyuu/use-modal-dialog/blob/master/example/index.js"
+          href="https://github.com/moriyuu/react-custom-modal-dialog/blob/master/example/index.js"
         >
           source code of this demo
         </a>
