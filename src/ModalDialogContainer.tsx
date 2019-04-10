@@ -1,64 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
-import EventEmitter from "events";
-
-class ModalDialogEventEmitter {
-  private emitter: EventEmitter;
-
-  constructor() {
-    this.emitter = new EventEmitter();
-  }
-
-  alert = async (text?: string): Promise<undefined> => {
-    this.emitter.emit("openAlert", text);
-    return await new Promise((resolve, reject) => {
-      this.emitter.once("alert", () => {
-        resolve();
-      });
-    }).then(() => undefined);
-  };
-
-  confirm = async (text?: string): Promise<boolean> => {
-    this.emitter.emit("openConfirm", text);
-    return await new Promise((resolve, reject) => {
-      this.emitter.once("confirm", (type: "ok" | "cancel") => {
-        if (type === "ok") resolve();
-        if (type === "cancel") reject();
-      });
-    })
-      .then(() => true)
-      .catch(() => false);
-  };
-
-  clickAlert = () => {
-    this.emitter.emit("alert");
-  };
-
-  clickConfirm = (type: "ok" | "cancel") => {
-    this.emitter.emit("confirm", type);
-  };
-
-  addEventListener(
-    type: "openAlert" | "openConfirm",
-    callback: (text: string) => void
-  ) {
-    this.emitter.addListener(type, callback);
-  }
-
-  removeEventListener(
-    type: "openAlert" | "openConfirm",
-    callback: (text: string) => void
-  ) {
-    this.emitter.removeListener(type, callback);
-  }
-}
-
-export const ModalDialog = new ModalDialogEventEmitter();
-
-/**
- * ================================================================================
- */
+import { ModalDialog } from "./ModalDialogEventEmitter";
 
 const Wrapper = styled.div<{ isOpen: boolean }>`
   box-sizing: border-box;
@@ -146,21 +89,6 @@ const useConfirm = () => {
 };
 
 /**
- * ModalDialogContainer
- */
-export const ModalDialogContainer: React.FC = () => {
-  const { confirmState, clickConfirm } = useConfirm();
-  const { alertState, clickAlert } = useAlert();
-
-  return (
-    <>
-      <Alert {...alertState} clickAlert={clickAlert} />
-      <Confirm {...confirmState} clickConfirm={clickConfirm} />
-    </>
-  );
-};
-
-/**
  * Alert
  */
 const Alert: React.FC<ModalDialogState & { clickAlert(): void }> = props => {
@@ -190,5 +118,20 @@ const Confirm: React.FC<
         <button onClick={() => clickConfirm("ok")}>OK</button>
       </div>
     </Wrapper>
+  );
+};
+
+/**
+ * ModalDialogContainer
+ */
+export const ModalDialogContainer: React.FC = () => {
+  const { confirmState, clickConfirm } = useConfirm();
+  const { alertState, clickAlert } = useAlert();
+
+  return (
+    <>
+      <Alert {...alertState} clickAlert={clickAlert} />
+      <Confirm {...confirmState} clickConfirm={clickConfirm} />
+    </>
   );
 };

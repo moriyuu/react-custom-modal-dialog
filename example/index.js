@@ -1,7 +1,7 @@
 import "@babel/polyfill";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { ModalDialog, ModalDialogContainer } from "../src";
+import { ModalDialogContainer, ModalDialog } from "../src";
 
 const App = () => {
   const [text, setText] = React.useState("");
