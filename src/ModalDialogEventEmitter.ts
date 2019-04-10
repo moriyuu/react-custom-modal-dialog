@@ -10,23 +10,21 @@ class ModalDialogEventEmitter {
 
   alert = async (content?: ModalDialogState["content"]): Promise<undefined> => {
     this.emitter.emit("openAlert", content);
-    return await new Promise((resolve, reject) => {
+    return await new Promise(resolve => {
       this.emitter.once("alert", () => {
-        resolve();
+        resolve(undefined);
       });
-    }).then(() => undefined);
+    });
   };
 
   confirm = async (content?: ModalDialogState["content"]): Promise<boolean> => {
     this.emitter.emit("openConfirm", content);
-    return await new Promise((resolve, reject) => {
+    return await new Promise(resolve => {
       this.emitter.once("confirm", (type: "ok" | "cancel") => {
-        if (type === "ok") resolve();
-        if (type === "cancel") reject();
+        if (type === "ok") resolve(true);
+        if (type === "cancel") resolve(false);
       });
-    })
-      .then(() => true)
-      .catch(() => false);
+    });
   };
 
   prompt = async (
